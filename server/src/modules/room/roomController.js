@@ -16,7 +16,7 @@ const createRoom = asyncHandler(async (req, res) => {
   });
   if (existingRoom) {
     res.status(200).json(existingRoom);
-  } else if (existingReverseRoom) {
+  } else if (existingReverseRoom) { 
     res.status(200).json(existingReverseRoom);
   } else {
     if (sender_id !== receiver_id) {
