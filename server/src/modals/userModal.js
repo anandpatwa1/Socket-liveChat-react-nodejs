@@ -14,10 +14,10 @@ const userSchema = new mongoose.Schema(
         type: Number,
       },
     ],
-    user_id: {
-      type: Number,
-      unique: true,
-    },
+    // user_id: {
+    //   type: Number,
+    //   unique: true,
+    // },
     userName: {
       type: String,
       required: false,

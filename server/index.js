@@ -42,8 +42,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //Routes
-app.use("/api/user", require("./src/modules/user/userRoutes"));
 app.use("/api/otp", require("./src/modules/tempUser/tempRoutes"));
+app.use("/api/user", require("./src/modules/user/userRoutes"));
+app.use("/api/room", require("./src/modules/room/roomRoutes"));
+app.use("/api/chat", require("./src/modules/chat/chatRouter"));
 
 app.get("/", (req, res) => {
   res.send("C:/Users/Keshav/Desktop/Anand/Creations/test soket/index.html");

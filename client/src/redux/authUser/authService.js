@@ -2,14 +2,14 @@ import axios from 'axios'
 
 const api = 'http://localhost:8000/api/otp'
 
-const registerUser = async (userEmail) => {
+const verifyOtp = async (userEmail) => {
     const res = await axios.post(api + '/verifyOtp' , userEmail)
     // const res = await fetch(api) 
     // if(res.data){
     //     localStorage.setItem('user' , JSON.stringify(res.data))
     // }
-    console.log(res);
-    // return res.data
+    // console.log(res);
+    return res.data
 }
 
 const loginUser = async (user) => {
@@ -21,7 +21,7 @@ const loginUser = async (user) => {
 }
 
 const authService = {
-    registerUser,
+    verifyOtp,
     loginUser
 }
 

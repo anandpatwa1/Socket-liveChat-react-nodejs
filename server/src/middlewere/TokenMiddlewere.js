@@ -22,6 +22,10 @@ const UserProtect = asyncHandler(async (req, res, next) => {
     }
 })
 
+// const seveRoom = (req, res, room_id)=>{
+//     req.room_id = room_id
+// }
+
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
       expiresIn: "30d",

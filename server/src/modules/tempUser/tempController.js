@@ -1,5 +1,6 @@
 const tempUser = require("../../modals/tempUserModal");
 const RealUser = require("../../modals/userModal");
+const User = require("../../modals/userModal");
 const asyncHandler = require("express-async-handler");
 const { generateOtp } = require("../../middlewere/otp");
 const { generateToken } = require("../../middlewere/TokenMiddlewere");
@@ -74,12 +75,11 @@ const verifyOtp = asyncHandler(async (req, res) => {
 
   if (checkEmail) {
     if (otp == dbotp) {
-
-      // user create
-      const user = await RealUser.create({
-        email,
-      });
-
+      
+        // user create
+        const user = await User.create({
+            email,
+          });
       if (user) {
         res.status(201).json({
           massage: "user created ",

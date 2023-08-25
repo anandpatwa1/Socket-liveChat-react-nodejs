@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./css/otpVerify.css";
 import { useDispatch } from "react-redux";
-import { register } from "../redux/authUser/authSlice";
+import { verifyOtp } from "../redux/authUser/authSlice";
 
 function OtpVerify() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
-  
+
   const onSubmit = (e) => {
-    e.preventDefault()
-    dispatch(register(email));
+    e.preventDefault();
+    dispatch(verifyOtp(email));
   };
 
   useEffect(() => {}, []);
@@ -20,11 +20,14 @@ function OtpVerify() {
         <div className="field">
           @
           <input
+            required
             autoComplete="off"
             placeholder="Username"
             className="input-field"
             type="email"
-            onChange={(e)=>{setEmail(e.target.value)}}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
           />
         </div>
         <button className="button1">SEND OTP</button>

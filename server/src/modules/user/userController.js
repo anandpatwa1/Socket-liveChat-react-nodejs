@@ -1,8 +1,8 @@
-const jwt = require("jsonwebtoken");
 const User = require("../../modals/userModal");
 const asyncHandler = require("express-async-handler");
+const { generateToken } = require("../../middlewere/TokenMiddlewere");
 
-const getUser = async (req, res) => {
+const getAllUser = async (req, res) => {
   const getAllUser = await User.find().select("-password");
   res.send(getAllUser);
 };
@@ -28,17 +28,17 @@ const updateProfile = asyncHandler(async (req, res) => {
       new: true,
     });
 
-
     if (oldEmails.email.includes(email) && email != undefined) {
-      
     } else {
       user.email.push(email);
     }
 
-    if (oldEmails.mobileNumber.includes(mobileNumber) && mobileNumber != undefined) {
-      
+    if (
+      oldEmails.mobileNumber.includes(mobileNumber) &&
+      mobileNumber != undefined
+    ) {
     } else {
-      user.mobileNumber.push(mobileNumber)
+      user.mobileNumber.push(mobileNumber);
     }
     user.save();
 
@@ -50,23 +50,22 @@ const updateProfile = asyncHandler(async (req, res) => {
 });
 
 const loginUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    res.send("enter all field");
+  const { email, otp } = req.body;
+  if (!email || !otp) {
+    res.send("enter email and otp field");
   }
   const userLogin = await User.findOne({ email: email });
 
-  // if (userLogin && (bcrypt.compare(password, userLogin.password))) {
-  //     res.status(201).json({
-  //         _id: userLogin._id,
-  //         name: userLogin.name,
-  //         email: userLogin.email,
-  //         token: generateToken(userLogin._id)
-  //     })
-  // } else {
-  //     res.status(401)
-  //     throw new Error("invalid credentials")
-  // }
+  if (userLogin && otp == 9977) {
+      res.status(201).json({
+        massage: "user login successfully",
+        data: userLogin,
+        token: generateToken(userLogin.id),
+      })
+  } else {
+      res.status(401)
+      throw new Error("invalid credentials")
+  }
 });
 
 const getMe = (req, res) => {
@@ -79,4 +78,4 @@ const getMe = (req, res) => {
   // res.send(user)
 };
 
-module.exports = { updateProfile, loginUser, getUser, getMe };
+module.exports = { updateProfile, loginUser, getAllUser, getMe };

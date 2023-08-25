@@ -7,6 +7,7 @@ const initialState = {
     isSuccess: false,
     isError: false,
     message: '',
+    otp : null
 }
 const authSlice = createSlice({
     name: 'auth',
@@ -16,20 +17,21 @@ const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            // .addCase(register.pending, (state) => {
-            //     state.isLoading = true
-            // })
-            // .addCase(register.fulfilled, (state, action) => {
-            //     state.isLoading = false
-            //     state.isSuccess = true
-            //     state.user = action.payload
-            // })
-            // .addCase(register.rejected, (state, action) => {
-            //     state.isLoading = false
-            //     state.isSuccess = false
-            //     state.isError = true
-            //     state.message = action.payload
-            // })
+            .addCase(verifyOtp.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(verifyOtp.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                console.log(action.payload);
+                state.user = action.payload
+            })
+            .addCase(verifyOtp.rejected, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = false
+                state.isError = true
+                state.message = action.payload
+            })
         // .addCase(login.pending, (state) => {
         //     state.isLoading = true
         // })
@@ -47,9 +49,9 @@ const authSlice = createSlice({
     }
 })
 
-export const register = createAsyncThunk('api/register', async (user) => {
+export const verifyOtp = createAsyncThunk('api/register', async (user) => {
     try {
-        return await authService.registerUser(user)
+        return await authService.verifyOtp(user)
     } catch (error) {
         const massage = error.response.data.message
         return thunkAPI.rejectWithValue(massage)
